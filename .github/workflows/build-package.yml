@@ -51,10 +51,10 @@ jobs:
       - name: Update github
         shell: bash
         run: |
-          # git add rpmbuild
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          if [ -n "$(git commit -m "new RPM Package and Source $(date +%y-%m-%d_%H:%M)" -p rpmbuild | grep "nothing to commit")" ];then exit 0; fi
+          git add rpmbuild
+          git commit -m "new RPM Package and Source $(date +%y-%m-%d_%H:%M)"
       
       - name: Send Hooks BigLinux Build Package
         shell: bash
