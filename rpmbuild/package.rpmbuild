@@ -1,0 +1,70 @@
+#!/bin/bash
+
+## DO NOT EDIT START ##
+cat << EOF > SPECS/rpmbuild.spec
+%global debug_package %{nil}
+Version:        $(date +%Y.%m.%d)
+Release:        $(date +%H%M)%{?dist}
+Source0:        source.tar.gz
+EOF
+## DO NOT EDIT END ##
+
+## EDIT START
+cat << EOF >> SPECS/rpmbuild.spec
+Name:           biglinux-package-RPM
+License:        GPL3
+Summary:        Simple Package Description
+# Requires:       bash
+# Requires:       
+# Requires:       
+# BuildRequires:  
+
+%description
+Long Package Description.
+
+#pre-install scripts
+# %prep
+
+# %setup -q
+
+#build scripts
+# %build
+
+#install scripts
+%install
+
+EOF
+#EDIT END ##
+
+
+## DO NOT EDIT START ##
+cat << 'EOF' >> SPECS/rpmbuild.spec
+# Copy files
+if [ -d "/$HOME/rpmbuild/BUILD/source/" ]; then
+     cp -ra "/$HOME/rpmbuild/BUILD/source/BUILD/SOURCE/." "${RPM_BUILD_ROOT}/"
+     echo "arquivos copiados"
+fi
+
+#post-install scripts
+# %post
+
+#FILES
+%files
+EOF
+
+IFS=$'\n'
+
+for dir in $(find ../source/ -type d | sed 's|^../source||'); do
+	echo "%dir $dir" >> SPECS/rpmbuild.spec
+done
+
+for file in $(find ../source/ -type f | sed 's|^../source||'); do
+	echo "$file" >> SPECS/rpmbuild.spec
+done
+## DO NOT EDIT END ##
+
+cat << EOF >> SPECS/rpmbuild.spec
+
+#pre-uninstall scripts
+# %preun
+EOF
