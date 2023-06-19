@@ -20,6 +20,10 @@ jobs:
       - name: Make SPEC
         shell: bash
         run: |
+          #se a pasta SPECS não existir, criar
+          if [ ! -d "rpmbuild/SPECS/" ];then
+            mkdir -p rpmbuild/SPECS/
+          fi
           bash package.rpmbuild
           
       - name: Make Source
@@ -44,6 +48,12 @@ jobs:
         uses: mxschmitt/action-tmate@v3
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.tmate_enabled }}
       
+      - name: Update github
+        run: |
+          git add rpmbuild
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          if [ -n "$(git commit -m "new RPM Package and Source $(date +%y-%m-%d_%H:%M)" | grep "nothing to commit")" ];then exit 0; fi
       
       - name: Send Hooks BigLinux Build Package
         shell: bash
