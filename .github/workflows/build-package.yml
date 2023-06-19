@@ -55,6 +55,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add rpmbuild
           git commit -m "new RPM Package and Source $(date +%y-%m-%d_%H:%M)"
+          git push
       
       - name: Send Hooks BigLinux Build Package
         shell: bash
