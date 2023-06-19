@@ -49,6 +49,7 @@ jobs:
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.tmate_enabled }}
       
       - name: Update github
+        shell: bash
         run: |
           git add rpmbuild
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
