@@ -1,6 +1,6 @@
 %global debug_package %{nil}
 Version:        2023.06.19
-Release:        2016%{?dist}
+Release:        2337%{?dist}
 Source0:        source.tar.gz
 Name:           biglinux-package-RPM
 License:        GPL3
@@ -34,13 +34,13 @@ fi
 
 #FILES
 %files
+%dir /otpx
 %dir /opt
 %dir /opt/xpto
 %dir /Nova pasta
-%dir /otpx
+/otpx/Arquivo de texto.txt
 /opt/xpto/xpto.txt
 /Nova pasta/Arquivo de texto.txt
-/otpx/Arquivo de texto.txt
 
 #pre-uninstall scripts
 # %preun
