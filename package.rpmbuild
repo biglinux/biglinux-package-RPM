@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## DO NOT EDIT START ##
-cat << EOF > SPECS/rpmbuild.spec
+cat << EOF > rpmbuild/SPECS/rpmbuild.spec
 %global debug_package %{nil}
 Version:        $(date +%Y.%m.%d)
 Release:        $(date +%H%M)%{?dist}
@@ -10,7 +10,7 @@ EOF
 ## DO NOT EDIT END ##
 
 ## EDIT START
-cat << EOF >> SPECS/rpmbuild.spec
+cat << EOF >> rpmbuild/SPECS/rpmbuild.spec
 Name:           biglinux-package-RPM
 License:        GPL3
 Summary:        Simple Package Description
@@ -22,31 +22,32 @@ Summary:        Simple Package Description
 %description
 Long Package Description.
 
-#pre-install scripts
-# %prep
+EOF
+#EDIT END ##
 
-# %setup -q
+## DO NOT EDIT START ##
+cat << EOF >> rpmbuild/SPECS/rpmbuild.spec
+#pre-install scripts
+%prep
+%setup -q
 
 #build scripts
-# %build
+%build
 
 #install scripts
 %install
 
 EOF
-#EDIT END ##
 
-
-## DO NOT EDIT START ##
-cat << 'EOF' >> SPECS/rpmbuild.spec
+cat << 'EOF' >> rpmbuild/SPECS/rpmbuild.spec
 # Copy files
-if [ -d "/$HOME/rpmbuild/BUILD/source/" ]; then
-     cp -ra "/$HOME/rpmbuild/BUILD/source/BUILD/SOURCE/." "${RPM_BUILD_ROOT}/"
+if [ -d "$HOME/rpmbuild/BUILD/source/" ]; then
+     cp -ra "$HOME/rpmbuild/BUILD/." "${RPM_BUILD_ROOT}/"
      echo "arquivos copiados"
 fi
 
 #post-install scripts
-# %post
+%post
 
 #FILES
 %files
@@ -54,16 +55,18 @@ EOF
 
 IFS=$'\n'
 
-for dir in $(find ../source/ -type d | sed 's|^../source||'); do
-	echo "%dir $dir" >> SPECS/rpmbuild.spec
+pushd source
+for dir in $(find -type d | sed 's|^.||'); do
+	echo "%dir $dir" >> ../rpmbuild/SPECS/rpmbuild.spec
 done
 
-for file in $(find ../source/ -type f | sed 's|^../source||'); do
-	echo "$file" >> SPECS/rpmbuild.spec
+for file in $(find -type f | sed 's|^.||'); do
+	echo "$file" >> ../rpmbuild/SPECS/rpmbuild.spec
 done
+popd
 ## DO NOT EDIT END ##
 
-cat << EOF >> SPECS/rpmbuild.spec
+cat << EOF >> rpmbuild/SPECS/rpmbuild.spec
 
 #pre-uninstall scripts
 # %preun

@@ -1,0 +1,51 @@
+name: Build Package
+
+on:
+  workflow_dispatch:
+    inputs:
+      tmate_enabled:
+        type: boolean
+        description: 'With TMATE'
+        required: false
+        default: false
+
+  push:
+    branches: [ "*" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Make SPEC
+        shell: bash
+        run: |
+          bash package.rpmbuild
+          
+      - name: Make Source
+        shell: bash
+        run: |
+          #make source.tar.gz
+          name=$(cat rpmbuild/SPECS/rpmbuild.spec | grep Name: | cut -d ":" -f2 | sed 's/^ \+//')
+          version=$(cat rpmbuild/SPECS/rpmbuild.spec | grep Version: | cut -d ":" -f2 | sed 's/^ \+//')
+
+          #se a pasta SOURCES não existir, criar
+          if [ ! -d "rpmbuild/SOURCES/" ];then
+            mkdir -p rpmbuild/SOURCES/
+          fi
+
+          #renomear pasta
+          mv source ${name}-${version}
+
+          #compactar source para empacotamento
+          tar -cvzf rpmbuild/SOURCES/source.tar.gz ${name}-${version}
+
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.tmate_enabled }}
+      
+      
+      - name: Send Hooks BigLinux Build Package
+        shell: bash
+        run: |
+          curl -X POST -H "Accept: application/json" -H "Authorization: token ${{ secrets.WEBHOOK_TOKEN }}" --data '{"event_type": "${{ github.repository }}", "client_payload": { "branch": "${{ github.ref_name }}", "url": "https://github.com/${{ github.repository }}"}}' https://api.github.com/repos/BigLinux-Package-Build/build-package/dispatches
