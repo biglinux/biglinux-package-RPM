@@ -66,6 +66,6 @@ jobs:
             -X POST \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ secrets.WEBHOOK_TOKEN }}" \
-            -d '{"event_type":"'$event'","client_payload":{"branch":"${{ github.ref_name }}","url":"https://github.com/${{ github.repository }}"}}' \
+            -d '{"event_type":"'$event'","client_payload":{"branch":"${{ github.ref_name }}","url":"https://github.com/${{ github.repository }}","repository":"${{ github.repository }}"}}' \
             https://api.github.com/repos/BigLinux-Package-Build/build-package/dispatches
             
