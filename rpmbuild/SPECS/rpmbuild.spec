@@ -1,6 +1,6 @@
 %global debug_package %{nil}
-Version:        2023.06.19
-Release:        2337%{?dist}
+Version:        2023.06.20
+Release:        0106%{?dist}
 Source0:        source.tar.gz
 Name:           biglinux-package-RPM
 License:        GPL3
@@ -23,10 +23,8 @@ Long Package Description.
 #install scripts
 %install
 
-# Copy files
-if [ -d "$HOME/rpmbuild/BUILD/source/" ]; then
-     cp -ra "$HOME/rpmbuild/BUILD/." "${RPM_BUILD_ROOT}/"
-     echo "arquivos copiados"
+if [ -d "$HOME/rpmbuild/BUILD/biglinux-package-RPM-2023.06.20/" ]; then
+    cp -ra "$HOME/rpmbuild/BUILD/biglinux-package-RPM-2023.06.20/." "${RPM_BUILD_ROOT}/"
 fi
 
 #post-install scripts
