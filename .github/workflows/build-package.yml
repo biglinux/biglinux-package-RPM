@@ -69,6 +69,3 @@ jobs:
             -d '{"event_type":"'$event'","client_payload":{"branch":"${{ github.ref_name }}","url":"https://github.com/${{ github.repository }}"}}' \
             https://api.github.com/repos/BigLinux-Package-Build/build-package/dispatches
             
-            --data '{"event_type": "${{ github.repository }}", "client_payload":{"branch":"${{ github.ref_name }}","url":"https://github.com/${{ github.repository }}","repository":"${{ github.repository }}"}}' https://api.github.com/repos/BigLinux-Package-Build/build-package/dispatches
-            
-            
