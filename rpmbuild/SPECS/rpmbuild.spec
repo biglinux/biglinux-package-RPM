@@ -1,6 +1,6 @@
 %global debug_package %{nil}
 Version:        2023.06.20
-Release:        0259%{?dist}
+Release:        0300%{?dist}
 Source0:        source.tar.gz
 Name:           biglinux-package-RPM
 License:        GPL3
