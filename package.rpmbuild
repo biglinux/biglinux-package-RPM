@@ -39,12 +39,15 @@ cat << EOF >> rpmbuild/SPECS/rpmbuild.spec
 
 EOF
 
-cat << 'EOF' >> rpmbuild/SPECS/rpmbuild.spec
+name=$(cat rpmbuild/SPECS/rpmbuild.spec | grep Name: | cut -d ":" -f2 | sed 's/^ \+//')
+version=$(cat rpmbuild/SPECS/rpmbuild.spec | grep Version: | cut -d ":" -f2 | sed 's/^ \+//')
+
 # Copy files
-if [ -d "$HOME/rpmbuild/BUILD/source/" ]; then
-     cp -ra "$HOME/rpmbuild/BUILD/." "${RPM_BUILD_ROOT}/"
-     echo "arquivos copiados"
-fi
+echo 'if [ -d "$HOME/rpmbuild/BUILD/'${name}-${version}/'" ]; then' >> rpmbuild/SPECS/rpmbuild.spec
+echo '    cp -ra "$HOME/rpmbuild/BUILD/'${name}-${version}'/." "${RPM_BUILD_ROOT}/"' >> rpmbuild/SPECS/rpmbuild.spec
+echo 'fi' >> rpmbuild/SPECS/rpmbuild.spec
+
+cat << 'EOF' >> rpmbuild/SPECS/rpmbuild.spec
 
 #post-install scripts
 %post
