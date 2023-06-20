@@ -60,11 +60,11 @@ IFS=$'\n'
 
 pushd source
 for dir in $(find -type d | sed 's|^.||'); do
-	echo "%dir $dir" >> ../rpmbuild/SPECS/rpmbuild.spec
+	echo '%dir "'$dir'"' >> ../rpmbuild/SPECS/rpmbuild.spec
 done
 
 for file in $(find -type f | sed 's|^.||'); do
-	echo "$file" >> ../rpmbuild/SPECS/rpmbuild.spec
+	echo '"'$file'"' >> ../rpmbuild/SPECS/rpmbuild.spec
 done
 popd
 ## DO NOT EDIT END ##
