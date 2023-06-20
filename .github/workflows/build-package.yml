@@ -67,8 +67,8 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ secrets.WEBHOOK_TOKEN }}" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
+            -d '{"event_type":"'$event'","client_payload":{"unit":false,"integration":true}}' \
             https://api.github.com/repos/BigLinux-Package-Build/build-package/dispatches 
-            --data '{"event_type":"'$event'","client_payload":{"unit":false,"integration":true}}' \
             
             
             
