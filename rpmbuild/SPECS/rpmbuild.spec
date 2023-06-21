@@ -1,6 +1,6 @@
 %global debug_package %{nil}
-Version:        2023.06.20
-Release:        0304%{?dist}
+Version:        2023.06.21
+Release:        0054%{?dist}
 Source0:        source.tar.gz
 Name:           biglinux-package-RPM
 License:        GPL3
@@ -23,8 +23,8 @@ Long Package Description.
 #install scripts
 %install
 
-if [ -d "$HOME/rpmbuild/BUILD/biglinux-package-RPM-2023.06.20/" ]; then
-    cp -ra "$HOME/rpmbuild/BUILD/biglinux-package-RPM-2023.06.20/." "${RPM_BUILD_ROOT}/"
+if [ -d "$HOME/rpmbuild/BUILD/biglinux-package-RPM-2023.06.21/" ]; then
+    cp -ra "$HOME/rpmbuild/BUILD/biglinux-package-RPM-2023.06.21/." "${RPM_BUILD_ROOT}/"
 fi
 
 #post-install scripts
@@ -32,13 +32,12 @@ fi
 
 #FILES
 %files
-%dir "/otpx"
 %dir "/opt"
-%dir "/opt/xpto"
-%dir "/Nova pasta"
-"/otpx/Arquivo de texto.txt"
-"/opt/xpto/xpto.txt"
-"/Nova pasta/Arquivo de texto.txt"
+%dir "/etc"
+%dir "/usr"
+"/opt/.file"
+"/etc/.file"
+"/usr/.file"
 
 #pre-uninstall scripts
 # %preun
